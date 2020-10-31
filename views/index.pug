@@ -1,0 +1,32 @@
+meta(charset='utf-8')
+meta(name='viewport' content='initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, user-scalable=no, minimal-ui')
+link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
+
+nav.navbar.navbar-expand-lg.navbar-white.bg-light
+	.navbar-brand.mr-auto.task-list
+		span.my-sm-2 Buttons  	
+	.login-nav-data    
+	if(loggedin)
+		.btn-group
+			.btn.btn-warning= username
+			a.btn.btn-warning.logout-btn(href='./logout') Logout
+	else	
+		.btn-group
+			a.btn.bg-warning(href='./login') Login
+			a.btn.bg-warning(href='./register') Register
+
+.buttons-container
+if(loggedin)
+	.btn-group.mr-2(role='group' aria-label='First group')
+		button.btn.btn-secondary.bg-success.btn-data(type='button' data-id='1') Button 1
+		.btn.bg-light.btn-secondary.input-1 
+	.btn-group.mr-2(role='group' aria-label='First group')
+		button.btn.btn-secondary.bg-success.btn-data(type='button' data-id='2') Button 2
+		.btn.bg-light.btn-secondary.input-2
+	.btn-group.mr-2(role='group' aria-label='First group')
+		button.btn.btn-secondary.bg-success.btn-data(type='button' data-id='3') Button 3
+		.btn.bg-light.btn-secondary.input-3
+
+script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
+script(src="/javascripts/main.js")

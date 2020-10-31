@@ -1,0 +1,15 @@
+meta(charset='utf-8')
+meta(name='viewport' content='initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, user-scalable=no, minimal-ui')
+link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
+
+.modal-dialog.modal-dialog-centered(role='document')
+    .modal-content
+        .modal-header.border-bottom-0 
+            h4.login-modal-msg Login
+        .modal-body
+            form(method='POST' action='/auth').d-flex.flex-column.text-center
+                .form-group
+                    input.form-control.form-email(type='email' name='email' placeholder='Your email address...')
+                .form-group
+                    input.form-control.form-password(type='password' name='password' placeholder='Your password...')
+                button.btn.btn-success.btn-modal-login(data-toggle='modal') Login
