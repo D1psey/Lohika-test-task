@@ -1,4 +1,4 @@
-*.env
-env
+.env
+.gitignore
 config.json
-/node-modules
+node_modules
