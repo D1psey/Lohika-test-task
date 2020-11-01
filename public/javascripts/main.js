@@ -3,10 +3,6 @@ const buttonsContainer = $('.buttons-container');
 const timerContainer = $('.timer-container');
 const userEmail = $('.hidden-email').attr('value');
 
-    // $('.button1_count').empty().append();
-    // $('.button2_count').empty().append();
-    // $('.button3_count').empty().append();
-
 $('body').on('click', '.btn-data', () => {
     buttons.attr('disabled', true);
     let total = 20;
@@ -24,6 +20,7 @@ $('body').on('click', '.btn-data', () => {
     }
 
     let increment = setInterval(countdown, 1000);
+
     $.ajax({
         type: 'GET',
         url: '/increment',

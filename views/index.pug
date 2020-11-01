@@ -8,6 +8,9 @@ nav.navbar.navbar-expand-lg.navbar-white.bg-light
 	.login-nav-data
 	if(loggedin)
 		.btn-group
+			if(isAdmin)
+				.btn.btn-warning.btn-admin-panel
+					a(href='/admin') Admin panel
 			.btn.btn-warning= username
 			a.btn.btn-warning.logout-btn(href='./logout') Logout
 	else	

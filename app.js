@@ -47,6 +47,7 @@ app.get('/', async (req, res) => {
 				loggedin: req.session.loggedin,
 				username: req.session.username, 
 				email: req.session.email,
+				isAdmin: req.session.isAdmin,
 				// buttons information
 				button1_number: buttonData.button1_number,
 				button2_number: buttonData.button2_number,
@@ -60,7 +61,6 @@ app.get('/', async (req, res) => {
 
 // increasing button.press count
 app.get('/increment', (req, res) => {
-	console.log(req.query);
 	let button_number = req.query.button_number;
 	let user_email = req.query.user_email;
 	const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -83,15 +83,6 @@ app.get('/login', (req, res) => {
 	res.render('login');
 });
 
-// user logout action
-app.get('/logout', (req, res) => {
-	req.session.loggedin = false;
-	req.session.username = undefined;
-	req.session.email = undefined;
-	res.redirect('/');
-	res.end();
-})
-
 // user login action
 app.post('/auth', (req, res) => {
 	let email = req.body.email;
@@ -108,6 +99,7 @@ app.post('/auth', (req, res) => {
 					req.session.loggedin = true;
 					req.session.email = user[0].email;
 					req.session.username = user[0].name;
+					req.session.isAdmin = user[0].isAdmin;
 					res.redirect('/');
 				} else {
 					req.session.loggedin = false;
@@ -118,10 +110,14 @@ app.post('/auth', (req, res) => {
 	}
 })
 
-// user registration page
-app.use('/register', (req, res) => {
-	res.render('register');
-});
+// user logout action
+app.get('/logout', (req, res) => {
+	req.session.loggedin = false;
+	req.session.username = undefined;
+	req.session.email = undefined;
+	res.redirect('/');
+	res.end();
+})
 
 // load 404 page if page not found
 app.use('/*', (req, res) => {
