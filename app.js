@@ -30,12 +30,18 @@ const getButtonData = (email, callback) => {
 	});
 }
 
+app.get('/getButtons', (req, res) => {
+	getButtonData(req.query.email, (buttonData) => {
+		res.send(buttonData);
+		res.end(); 
+	});
+});
+
 // render main page
 app.get('/', async (req, res) => {
 	// check if user is logged in
 	if(req.session.loggedin){
 		const buttonData = await getButtonData(req.session.email, (buttonData) => {
-			console.log(buttonData);
 			// load page with user data
 			res.render('index', {
 				loggedin: req.session.loggedin,
@@ -50,6 +56,26 @@ app.get('/', async (req, res) => {
 	} else {
 		res.render('index');
 	}
+});
+
+// increasing button.press count
+app.get('/increment', (req, res) => {
+	console.log(req.query);
+	let button_number = req.query.button_number;
+	let user_email = req.query.user_email;
+	const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+	client.connect(() => {
+		// https://stackoverflow.com/questions/17039018/how-to-use-a-variable-as-a-field-name-in-mongodb-native-findone
+		let query = {}
+		query[button_number] = 1;
+		client.db('sample_mflix').collection('buttons').updateOne({'user_email': user_email}, { $inc: query}).then(() => {
+			client.close();
+			getButtonData(user_email, (buttonData) => {
+				res.send(buttonData);
+				res.end();
+			});
+		});
+	});
 });
 
 // render user login page

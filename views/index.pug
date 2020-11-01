@@ -5,7 +5,7 @@ link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/c
 nav.navbar.navbar-expand-lg.navbar-white.bg-light
 	.navbar-brand.mr-auto.task-list
 		span.my-sm-2 Buttons  	
-	.login-nav-data    
+	.login-nav-data
 	if(loggedin)
 		.btn-group
 			.btn.btn-warning= username
@@ -15,19 +15,20 @@ nav.navbar.navbar-expand-lg.navbar-white.bg-light
 			a.btn.bg-warning(href='./login') Login
 			a.btn.bg-warning(href='./register') Register
 
-.buttons-container
-if(loggedin)
-	.btn-group.mr-2(role='group' aria-label='First group')
-		button.btn.btn-secondary.bg-success.btn-data(data-id='1') Button 1
-		.btn.btn-secondary= button1_number 
-	.btn-group.mr-2(role='group' aria-label='First group')
-		button.btn.btn-secondary.bg-success.btn-data(data-id='2') Button 2
-		.btn.btn-secondary= button2_number
-	.btn-group.mr-2(role='group' aria-label='First group')
-		button.btn.btn-secondary.bg-success.btn-data(data-id='3') Button 3
-		.btn.btn-secondary= button3_number
-	
-	.btn.bg-danger.btn-danger= btnData
+.buttons-container.d-flex.justify-content-around
+	if(loggedin)
+		.btn-group
+			button.btn.btn-success.btn-data(data-id='button1_number') Button 1
+			.btn.btn-secondary.button1_count= button1_number 
+		.btn-group
+			button.btn.btn-success.btn-data(data-id='button2_number') Button 2
+			.btn.btn-secondary.button2_count= button2_number
+		.btn-group
+			button.btn.btn-success.btn-data(data-id='button3_number') Button 3
+			.btn.btn-secondary.button3_count= button3_number
+		input.hidden-email(type='hidden' value= email)
+
+h1.timer-container.d-flex.justify-content-center
 
 script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
 script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
