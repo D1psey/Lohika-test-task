@@ -19,27 +19,40 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-// rendering main page
-app.get('/', (req, res) => {
+// get button data from database
+const getButtonData = (email, callback) => {
+	const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+	client.connect(() => {
+		client.db('sample_mflix').collection('buttons').find({'user_email': email}).toArray().then((buttons) => {
+			client.close();
+			return callback(buttons[0]);
+		});
+	});
+}
+
+// render main page
+app.get('/', async (req, res) => {
 	// check if user is logged in
 	if(req.session.loggedin){
-		getButtonData(req.session.email).then((buttonData) => {
+		const buttonData = await getButtonData(req.session.email, (buttonData) => {
+			console.log(buttonData);
 			// load page with user data
 			res.render('index', {
 				loggedin: req.session.loggedin,
 				username: req.session.username, 
 				email: req.session.email,
-				// buttions information
-				buttonData: buttonData
+				// buttons information
+				button1_number: buttonData.button1_number,
+				button2_number: buttonData.button2_number,
+				button3_number: buttonData.button3_number
 			});
-		});		
+		});
 	} else {
 		res.render('index');
 	}
-	console.log(req.session.username);
 });
 
-// rendering user login page
+// render user login page
 app.get('/login', (req, res) => {
 	res.render('login');
 });
@@ -56,8 +69,7 @@ app.get('/logout', (req, res) => {
 // user login action
 app.post('/auth', (req, res) => {
 	let email = req.body.email;
-	let password = req.body.password;
-	
+	let password = req.body.password;	
 	// if data entered successfully
 	if(email && password){
 		// connect to db
@@ -70,27 +82,22 @@ app.post('/auth', (req, res) => {
 					req.session.loggedin = true;
 					req.session.email = user[0].email;
 					req.session.username = user[0].name;
+					res.redirect('/');
 				} else {
 					req.session.loggedin = false;
-				}
-				res.redirect('/')
+				}				
 				res.end();
 			})
 		})
 	}
 })
 
-// getting button data from database
-let getButtonData = (email) => {
-
-}
-
 // user registration page
 app.use('/register', (req, res) => {
 	res.render('register');
 });
 
-// loading 404 page if page not found
+// load 404 page if page not found
 app.use('/*', (req, res) => {
 	res.sendFile(__dirname + "/public/404.html");
 });
