@@ -15,17 +15,19 @@ $('body').on('click', '.btn-data', () => {
     let stopCountdown = () => {
         clearInterval(increment);
         timerContainer.empty();
+        buttonInformation.empty();
         buttons.attr('disabled', false);
     }
 
     let increment = setInterval(countdown, 1000);
     let dataId = event.target.dataset.id;
+    let dataName = event.target.dataset.name
     $.ajax({
         type: 'GET',
         url: '/increment',
         data: { button_number: dataId }
     }).done((data) => {
-        buttonInformation.html(`${event.target.dataset.name} was pressed <b>${data.button1_number}</b> times`)
+        buttonInformation.html(`${dataName} was pressed ${data.button1_number} times`)
     });
 });
 
