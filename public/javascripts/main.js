@@ -27,7 +27,7 @@ $('body').on('click', '.btn-data', () => {
         url: '/increment',
         data: { button_number: dataId }
     }).done((data) => {
-        buttonInformation.html(`${dataName} was pressed ${data.button1_number} times`)
+        buttonInformation.html(`${dataName} was pressed ${data} times`);
     });
 });
 

@@ -69,7 +69,7 @@ app.get('/increment', (req, res) => {
 		client.db('sample_mflix').collection('buttons').updateOne({'user_email': req.session.email}, { $inc: query}).then(() => {
 			client.close();
 			getButtonData(req.session.email, (buttonData) => {
-				res.send(buttonData);
+				res.send(buttonData[button_number]);
 				res.end();
 			});
 		});
