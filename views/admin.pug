@@ -12,7 +12,11 @@ nav.navbar.navbar-expand-lg.navbar-white.bg-light
                 a.btn.btn-warning.btn-admin-panel(href='/admin') Admin Panel
             .btn.btn-warning= email
             a.btn.btn-warning.logout-btn(href='./logout') Logout
+    else	
+        a.btn.bg-warning(href='./login') Login
+
+.db-table
 
 script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
 script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
-script(src="/javascripts/main.js")
+script(src="/javascripts/admin.js")
