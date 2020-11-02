@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongodb = require('mongodb');
+const { render } = require('pug');
 const MongoClient = mongodb.MongoClient;
 const uri = (require('./config.json')).uri;
 const app = express();
@@ -30,6 +31,7 @@ const getButtonData = (email, callback) => {
 	});
 }
 
+//get button fata route
 app.get('/getButtons', (req, res) => {
 	getButtonData(req.query.email, (buttonData) => {
 		res.send(buttonData);
@@ -109,11 +111,15 @@ app.post('/auth', (req, res) => {
 // user logout action
 app.get('/logout', (req, res) => {
 	req.session.loggedin = false;
-	req.session.username = undefined;
 	req.session.email = undefined;
+	req.session.isAdmin = false;
 	res.redirect('/');
 	res.end();
 })
+
+app.get('/admin', (req, res) => {
+	res.render('admin');
+});
 
 // load 404 page if page not found
 app.use('/*', (req, res) => {

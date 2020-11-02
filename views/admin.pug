@@ -1,0 +1,18 @@
+meta(charset='utf-8')
+meta(name='viewport' content='initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, user-scalable=no, minimal-ui')
+link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css' integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh' crossorigin='anonymous')
+
+nav.navbar.navbar-expand-lg.navbar-white.bg-light
+    .navbar-brand.mr-auto.task-list
+        span.my-sm-2 Buttons  	
+    .login-nav-data
+    if(loggedin)
+        .btn-group
+            if(isAdmin)
+                a.btn.btn-warning.btn-admin-panel(href='/admin') Admin Panel
+            .btn.btn-warning= email
+            a.btn.btn-warning.logout-btn(href='./logout') Logout
+
+script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
+script(src="/javascripts/main.js")
