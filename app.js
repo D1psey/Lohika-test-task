@@ -45,7 +45,6 @@ app.get('/', async (req, res) => {
 			// load page with user data
 			res.render('index', {
 				loggedin: req.session.loggedin,
-				username: req.session.username, 
 				email: req.session.email,
 				isAdmin: req.session.isAdmin,
 				// buttons information
@@ -62,15 +61,14 @@ app.get('/', async (req, res) => {
 // increasing button.press count
 app.get('/increment', (req, res) => {
 	let button_number = req.query.button_number;
-	let user_email = req.query.user_email;
 	const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 	client.connect(() => {
 		// https://stackoverflow.com/questions/17039018/how-to-use-a-variable-as-a-field-name-in-mongodb-native-findone
 		let query = {}
 		query[button_number] = 1;
-		client.db('sample_mflix').collection('buttons').updateOne({'user_email': user_email}, { $inc: query}).then(() => {
+		client.db('sample_mflix').collection('buttons').updateOne({'user_email': req.session.email}, { $inc: query}).then(() => {
 			client.close();
-			getButtonData(user_email, (buttonData) => {
+			getButtonData(req.session.email, (buttonData) => {
 				res.send(buttonData);
 				res.end();
 			});
@@ -86,19 +84,17 @@ app.get('/login', (req, res) => {
 // user login action
 app.post('/auth', (req, res) => {
 	let email = req.body.email;
-	let password = req.body.password;	
 	// if data entered successfully
-	if(email && password){
+	if(email){
 		// connect to db
 		const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 		client.connect(() => {
-			client.db('sample_mflix').collection('users').find({'email': email, 'password': password}).toArray().then(user => {
+			client.db('sample_mflix').collection('users').find({'email': email}).toArray().then(user => {
 				client.close();
 				// if there is a match betweed entered data and db data
 				if(user.length > 0){
 					req.session.loggedin = true;
 					req.session.email = user[0].email;
-					req.session.username = user[0].name;
 					req.session.isAdmin = user[0].isAdmin;
 					res.redirect('/');
 				} else {

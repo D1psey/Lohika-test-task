@@ -1,7 +1,6 @@
 const buttons = $('.btn-data');
-const buttonsContainer = $('.buttons-container');
 const timerContainer = $('.timer-container');
-const userEmail = $('.hidden-email').attr('value');
+const buttonInformation = $('.button-information');
 
 $('body').on('click', '.btn-data', () => {
     buttons.attr('disabled', true);
@@ -20,15 +19,13 @@ $('body').on('click', '.btn-data', () => {
     }
 
     let increment = setInterval(countdown, 1000);
-
+    let dataId = event.target.dataset.id;
     $.ajax({
         type: 'GET',
         url: '/increment',
-        data: { button_number: event.target.dataset.id, user_email: userEmail }
+        data: { button_number: dataId }
     }).done((data) => {
-        $('.button1_count').html(data.button1_number);
-        $('.button2_count').html(data.button2_number);
-        $('.button3_count').html(data.button3_number);
+        buttonInformation.html(`${event.target.dataset.name} was pressed <b>${data.button1_number}</b> times`)
     });
 });
 

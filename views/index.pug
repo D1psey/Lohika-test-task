@@ -9,29 +9,21 @@ nav.navbar.navbar-expand-lg.navbar-white.bg-light
 	if(loggedin)
 		.btn-group
 			if(isAdmin)
-				.btn.btn-warning.btn-admin-panel
-					a(href='/admin') Admin panel
-			.btn.btn-warning= username
+				a.btn.btn-warning.btn-admin-panel(href='/admin') Admin Panel
+			.btn.btn-warning= email
 			a.btn.btn-warning.logout-btn(href='./logout') Logout
 	else	
 		.btn-group
 			a.btn.bg-warning(href='./login') Login
-			a.btn.bg-warning(href='./register') Register
 
 .buttons-container.d-flex.justify-content-around
 	if(loggedin)
-		.btn-group
-			button.btn.btn-success.btn-data(data-id='button1_number') Button 1
-			.btn.btn-secondary.button1_count= button1_number 
-		.btn-group
-			button.btn.btn-success.btn-data(data-id='button2_number') Button 2
-			.btn.btn-secondary.button2_count= button2_number
-		.btn-group
-			button.btn.btn-success.btn-data(data-id='button3_number') Button 3
-			.btn.btn-secondary.button3_count= button3_number
-		input.hidden-email(type='hidden' value= email)
+		button.btn.btn-outline-success.btn-data(data-name='Button 1' data-id='button1_number') Button 1
+		button.btn.btn-outline-success.btn-data(data-name='Button 2' data-id='button2_number') Button 2
+		button.btn.btn-outline-success.btn-data(data-name='Button 3' data-id='button3_number') Button 3
 
 h1.timer-container.d-flex.justify-content-center
+h1.button-information.d-flex.justify-content-center
 
 script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
 script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
