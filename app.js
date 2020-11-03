@@ -39,6 +39,16 @@ app.get('/getButtons', (req, res) => {
 	});
 });
 
+const getUsers = (callback) => {
+	const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+	client.connect(() => {
+		client.db('sample_mflix').collection('buttons').find({}).toArray().then((buttons) => {
+			client.close();
+			return callback(buttons);
+		});
+	});
+}
+
 // render main page
 app.get('/', async (req, res) => {
 	// check if user is logged in
@@ -117,8 +127,31 @@ app.get('/logout', (req, res) => {
 	res.end();
 })
 
+//render admin page
 app.get('/admin', (req, res) => {
-	res.render('admin');
+    //check if user isAdmin
+	if(req.session.isAdmin){
+		getUsers((data) => {
+			res.render('admin', {array: data});
+		});
+	} else {
+		res.sendFile(__dirname + "/public/404.html");
+	}
+});
+
+const deleteEl = (user_email) => {
+	const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+	client.connect(() => {
+		client.db('sample_mflix').collection('buttons').deleteOne({'user_email': user_email}).then(() => {
+			client.close();
+		});
+	});
+}
+
+// user remove route
+app.get('/deleteEl', async (req, res) => {
+	await deleteEl(req.query.user_email);
+	res.end();
 });
 
 // load 404 page if page not found

@@ -6,16 +6,30 @@ nav.navbar.navbar-expand-lg.navbar-white.bg-light
     .navbar-brand.mr-auto.task-list
         span.my-sm-2 Buttons  	
     .login-nav-data
+    a.btn.btn-warning(href='/') Home
     if(loggedin)
         .btn-group
-            if(isAdmin)
-                a.btn.btn-warning.btn-admin-panel(href='/admin') Admin Panel
             .btn.btn-warning= email
             a.btn.btn-warning.logout-btn(href='./logout') Logout
-    else	
-        a.btn.bg-warning(href='./login') Login
 
-.db-table
+table.table.db-table
+    thead
+        tr
+            th Email
+            th Button 1
+            th Button 2
+            th Button 3
+            th X
+    tbody
+        each el in array
+            tr
+                th #{el.user_email}
+                td #{el.button1_number}
+                td #{el.button2_number}
+                td #{el.button3_number}
+                td
+                    .delete-element.text-danger(data-id= el.user_email) Delete
+
 
 script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js")
 script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
